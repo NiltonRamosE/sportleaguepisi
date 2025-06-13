@@ -12,9 +12,9 @@ interface Props {
 
 const { team }: Props = Astro.props;
 ---
-
+<!-- href={`/teams/${team.id}`}  -->
 <a 
-  href={`/teams/${team.id}`} 
+  href={`/#equipos`} 
   class="block group"
   aria-label={`Ver detalles del equipo ${team.name}`}
 >
