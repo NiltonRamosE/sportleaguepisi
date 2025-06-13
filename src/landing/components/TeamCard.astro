@@ -19,7 +19,6 @@ const { team }: Props = Astro.props;
   aria-label={`Ver detalles del equipo ${team.name}`}
 >
   <div class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 h-full flex flex-col">
-    <!-- Header con color dinámico -->
     <div 
       class="p-4 text-center"
       style={`background: #058ebc; color: white;`}
@@ -27,7 +26,6 @@ const { team }: Props = Astro.props;
       <h3 class="font-bold text-xl truncate">{team.name}</h3>
     </div>
     
-    <!-- Contenido principal -->
     <div class="p-4 flex-1 flex flex-col">
       <div class="flex justify-center mb-4 flex-shrink-0">
         <img 
@@ -50,7 +48,6 @@ const { team }: Props = Astro.props;
         </ul>
       </div>
       
-      <!-- Botón/flotante para indicar acción -->
       <div class="mt-4 text-center">
         <span class="inline-block px-3 py-1 text-sm font-medium text-theme-berkeley-blue bg-blue-50 rounded-full group-hover:bg-blue-100 transition-colors">
           Ver alineación
@@ -61,7 +58,6 @@ const { team }: Props = Astro.props;
 </a>
 
 <style>
-  /* Suavizar la transición del hover */
   .group:hover .group-hover\:scale-110 {
     transform: scale(1.1);
   }
