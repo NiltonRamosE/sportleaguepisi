@@ -1,3 +1,80 @@
-<section>
-    <h1>SPORT LEAGUE EPISI</h1>
+---
+// src/sections/Hero.astro
+import Countdown from '@/landing/components/Countdown.astro';
+
+// Configuración de la fecha del evento
+const eventDate = "21 de Junio";
+const eventTime = "9:00 AM";
+const eventLocation = "Loza deportiva UNS (al lado del taller de judo, segunda puerta)";
+---
+
+<section id="inicio" class="relative text-white pt-24 pb-16 md:pt-32 md:pb-24">
+  
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="flex flex-col lg:flex-row items-center gap-8">
+      <!-- Contenido de texto -->
+      <div class="w-full lg:w-1/2 space-y-6">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+          SPORT LEAGUE EPISI <span class="text-black">EDICIÓN 2025</span>
+        </h1>
+        <p class="text-xl md:text-2xl">
+          El torneo de fútbol universitario de la Escuela de Ingeniería de Sistemas e Informática
+        </p>
+        
+        <div class="space-y-4">
+          <p class="text-lg flex items-start">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            <span>{eventDate} a las {eventTime}</span>
+          </p>
+          <p class="text-lg flex items-start">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span>{eventLocation}</span>
+          </p>
+        </div>
+        
+        <div class="flex flex-wrap gap-4 pt-4">
+          <a href="#fixture" class="bg-keppel hover:bg-berkeley text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-lg hover:shadow-xl">
+            Ver Fixture
+          </a>
+          <a href="#equipos" class="border-2 border-white hover:bg-theme-blue hover:text-theme-berkeley-blue text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-lg hover:shadow-xl">
+            Equipos Participantes
+          </a>
+        </div>
+      </div>
+      
+      <!-- Imagen - ahora visible en móvil con mejor manejo de tamaño -->
+      <div class="w-full lg:w-1/2 mt-8 lg:mt-0">
+        <img 
+          src="/football-player.webp" 
+          alt="Fútbol universitario" 
+          class="w-full h-auto max-h-[400px] object-contain animate-bounce-slow"
+          loading="eager"
+        />
+      </div>
+    </div>
+    
+    <!-- Countdown -->
+    <div class="mt-12 md:mt-16">
+      <Countdown />
+    </div>
+  </div>
 </section>
+
+<style>
+  .animate-bounce-slow {
+    animation: bounce-slow 3s infinite ease-in-out;
+  }
+  @keyframes bounce-slow {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-15px);
+    }
+  }
+</style>
