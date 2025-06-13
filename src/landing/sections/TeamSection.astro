@@ -1,0 +1,73 @@
+---
+// src/sections/Equipos.astro
+import TeamCard from '@/landing/components/TeamCard.astro';
+import ScrollingBanner from "@/landing/components/ScrollingBanner.astro";
+const logos = [
+  "/logo_chocolateros.webp",
+  "/logo-futbol.webp",
+  "/logo-futbol.webp",
+  "/logo-futbol.webp",
+];
+const teams = [
+  {
+    id: 'promocion2021',
+    name: 'Chocolateros FC',
+    logo: '/logo_chocolateros.webp',
+    players: ['Edwin Osorio', 'Anderzon Luján', 'José Torres', 'Valentino Guevara', 'Rodrigo Trejo', 'Miguel Flores'],
+  },
+  {
+    id: 'promocion2022',
+    name: 'Promoción 2022',
+    logo: '/logo-futbol.webp',
+    players: ['Roberto Díaz', 'Fernando Silva', 'José Mendoza', 'Alberto Rojas', 'Raúl Vargas'],
+  },
+  {
+    id: 'promocion2023',
+    name: 'Promoción 2023',
+    logo: '/logo-futbol.webp',
+    players: ['Mario Fuentes', 'Pedro Salas', 'Jorge Paredes', 'Ricardo León', 'Daniel Quispe', 'Oscar Ríos'],
+  },
+  {
+    id: 'promocion2024',
+    name: 'Promoción 2024',
+    logo: '/logo-futbol.webp',
+    players: ['Eduardo Montes', 'Gabriel Soto', 'Pablo Velasco', 'Sergio Miranda', 'Hugo Campos'],
+  },
+];
+---
+
+<section id="equipos" class="py-16">
+  <ScrollingBanner logos={logos} speed='fast' logoSize='lg' gap='lg'/>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <span class="inline-block px-3 py-1 text-sm font-medium text-keppel bg-keppel/10 rounded-full mb-4">
+        Sport League Episi 2025
+      </span>
+      <h2 class="text-4xl font-bold text-gray-900">
+        Equipos <span class="text-berkeley">Participantes</span>
+      </h2>
+      <div class="w-24 h-1.5 bg-keppel/80 mx-auto mt-4 rounded-full"></div>
+      <p class="mt-6 text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+        Descubre los equipos que competirán por el título este año.
+      </p>
+    </div>
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+      {teams.map((team) => (
+        <TeamCard team={team} />
+      ))}
+    </div>
+
+    <div class="mt-12 text-center">
+      <a 
+        href="/todos-los-equipos" 
+        class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-berkeley hover:bg-berkeley/90 transition-colors shadow-sm"
+      >
+        Ver todos los equipos
+        <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 -mr-1 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
