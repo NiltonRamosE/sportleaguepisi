@@ -1,0 +1,142 @@
+---
+import ScrollingBanner from "@/landing/components/ScrollingBanner.astro";
+
+const logos = [
+  "/logo_chocolateros.webp",
+  "/logo-futbol.webp",
+  "/logo-futbol.webp",
+  "/logo-futbol.webp",
+];
+---
+
+<section id="inscription" class="text-center mb-10">
+  <ScrollingBanner logos={logos} speed='fast' logoSize='lg' gap='lg'/>
+ 
+  <h3 class="text-2xl font-medium relative inline-block mt-10">
+    INSCRIBETE AHORA
+    <br />
+    <span class="text-theme-ring-theme-keppel text-4xl font-bold block mt-2">
+      MEDIANTE NUESTRO FORMULARIO
+    </span>
+  </h3>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-24 mt-32 items-stretch px-4 sm:px-24">
+    <div class="flex items-center justify-center">
+      <div class="bg-white p-6 rounded-4xl shadow-brand-card w-xl h-full">
+        <h4 class="text-xl font-bold mb-12 text-black text-left mt-4">Escribe tu mensaje</h4>
+        <form id="registroForm" class="space-y-8 w-full max-w-xl" action="https://formspree.io/f/mrbkqrjv" method="POST">
+          <div>
+            <label for="nombre_equipo" class="block text-sm font-medium text-black mb-1">Nombre del equipo (Colocar "Sin equipo" si no tuviera)<span class="text-red-600">*</span></label>
+            <input name="nombre_equipo" type="text" required class="w-full px-4 py-3 border border-black/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-theme-keppel" />
+          </div>
+
+          <div class="flex flex-col md:flex-row gap-4">
+            <div class="w-full">
+              <label class="block text-sm font-medium text-black mb-1">Nombres (Representante) <span class="text-red-600">*</span></label>
+              <input name="nombres_representante" type="text" required class="w-full px-4 py-3 border border-black/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-theme-keppel" />
+            </div>
+            <div class="w-full">
+              <label class="block text-sm font-medium text-black mb-1">Apellidos (Representante) <span class="text-red-600">*</span></label>
+              <input name="apellidos_representante" type="text" required class="w-full px-4 py-3 border border-black/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-theme-keppel" />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-black mb-1">DNI <span class="text-red-600">*</span></label>
+            <input name="dni" type="text" required class="w-full px-4 py-3 border border-black/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-theme-keppel" />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-black mb-1">Número de Celular <span class="text-red-600">*</span></label>
+            <input name="celular" type="tel" required class="w-full px-4 py-3 border border-black/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-theme-keppel" />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-black mb-1">¿Tienes equipo? <span class="text-red-600">*</span></label>
+            <select id="tieneEquipo" name="tiene_equipo" required class="w-full px-4 py-3 border border-black/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-theme-keppel">
+              <option value="">Selecciona</option>
+              <option value="si">Sí</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+
+          <div id="cantidadMiembrosContainer" class="hidden">
+            <label class="block text-sm font-medium text-black mb-1">¿Cuántos miembros quieres registrar? <span class="text-red-600">*</span></label>
+            <input id="cantidadMiembros" type="number" min="1" max="12" class="w-full px-4 py-3 border border-black/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-theme-keppel" />
+          </div>
+
+          <div id="miembrosContainer" class="space-y-6"></div>
+
+          <button type="submit" class="bg-theme-keppel text-black border-2 border-black font-medium py-3 px-6 rounded-4xl hover:bg-theme-blue transition-colors duration-200">
+            Enviar registro
+          </button>
+        </form>
+      </div>
+    </div>
+    
+    <div class="flex flex-col">
+      <div class="flex-grow flex items-center justify-center mt-10">
+        <img src="/arbitro.webp" alt="Contacto ilustración" class="w-lg h-lg lg:w-xl lg:h-xl object-contain animate-bounce-slow" loading="lazy" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .shadow-brand-card {
+    box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.3);
+  }
+  .animate-bounce-slow {
+    animation: bounce-slow 3s infinite ease-in-out;
+  }
+  @keyframes bounce-slow {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-15px);
+    }
+  }
+</style>
+
+<script is:inline>
+  const tieneEquipo = document.getElementById('tieneEquipo');
+  const cantidadMiembrosContainer = document.getElementById('cantidadMiembrosContainer');
+  const cantidadMiembros = document.getElementById('cantidadMiembros');
+  const miembrosContainer = document.getElementById('miembrosContainer');
+  const form  = document.getElementById('registroForm');
+  tieneEquipo.addEventListener('change', () => {
+    if (tieneEquipo.value === 'si') {
+      cantidadMiembrosContainer.classList.remove('hidden');
+    } else {
+      cantidadMiembrosContainer.classList.add('hidden');
+      miembrosContainer.innerHTML = '';
+    }
+  });
+
+  cantidadMiembros.addEventListener('input', () => {
+    miembrosContainer.innerHTML = '';
+    const cantidad = parseInt(cantidadMiembros.value);
+    for (let i = 1; i <= cantidad; i++) {
+      miembrosContainer.innerHTML += `
+        <div class="border-t pt-4">
+          <h5 class="font-semibold mb-2">Miembro ${i}</h5>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input name="miembro_${i}_nombres" placeholder="Nombres" required class="px-4 py-3 border border-black/50 rounded-lg w-full" />
+            <input name="miembro_${i}_apellidos" placeholder="Apellidos" required class="px-4 py-3 border border-black/50 rounded-lg w-full" />
+            <input name="miembro_${i}_codigo" placeholder="Código de matrícula" class="px-4 py-3 border border-black/50 rounded-lg w-full" />
+            <input name="miembro_${i}_camiseta" placeholder="N.º de camiseta" class="px-4 py-3 border border-black/50 rounded-lg w-full" />
+          </div>
+        </div>
+      `;
+    }
+  });
+
+  form.addEventListener('submit', (e) => {
+    setTimeout(() => {
+      form.reset();
+      cantidadMiembrosContainer.classList.add('hidden');
+      miembrosContainer.innerHTML = '';
+    }, 100);
+  });
+</script>
