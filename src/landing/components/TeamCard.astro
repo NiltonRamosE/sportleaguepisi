@@ -1,0 +1,69 @@
+---
+// src/components/TeamCard.astro
+interface Team {
+  id: string;
+  name: string;
+  logo: string;
+  players: string[];
+}
+
+interface Props {
+  team: Team;
+}
+
+const { team }: Props = Astro.props;
+---
+
+<a 
+  href={`/teams/${team.id}`} 
+  class="block group"
+  aria-label={`Ver detalles del equipo ${team.name}`}
+>
+  <div class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 h-full flex flex-col">
+    <!-- Header con color dinámico -->
+    <div 
+      class="p-4 text-center"
+      style={`background: #058ebc; color: white;`}
+    >
+      <h3 class="font-bold text-xl truncate">{team.name}</h3>
+    </div>
+    
+    <!-- Contenido principal -->
+    <div class="p-4 flex-1 flex flex-col">
+      <div class="flex justify-center mb-4 flex-shrink-0">
+        <img 
+          src={team.logo} 
+          alt={`Logo de ${team.name}`} 
+          class="h-24 w-24 object-contain transition-transform group-hover:scale-110" 
+          loading="lazy"
+        />
+      </div>
+      
+      <div class="space-y-2 flex-1">
+        <h4 class="font-semibold text-theme-berkeley-blue">Jugadores destacados:</h4>
+        <ul class="space-y-1">
+          {team.players.slice(0, 5).map((player: string) => (
+            <li class="text-gray-700 truncate" title={player}>{player}</li>
+          ))}
+          {team.players.length > 5 && (
+            <li class="text-gray-500 text-sm">+{team.players.length - 5} más...</li>
+          )}
+        </ul>
+      </div>
+      
+      <!-- Botón/flotante para indicar acción -->
+      <div class="mt-4 text-center">
+        <span class="inline-block px-3 py-1 text-sm font-medium text-theme-berkeley-blue bg-blue-50 rounded-full group-hover:bg-blue-100 transition-colors">
+          Ver alineación
+        </span>
+      </div>
+    </div>
+  </div>
+</a>
+
+<style>
+  /* Suavizar la transición del hover */
+  .group:hover .group-hover\:scale-110 {
+    transform: scale(1.1);
+  }
+</style>
