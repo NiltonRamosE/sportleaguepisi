@@ -1,0 +1,166 @@
+---
+// src/sections/Fixture.astro
+interface Team {
+  id: string;
+  name: string;
+  logo: string;
+}
+
+const teams: Team[] = [
+  {
+    id: 'promocion2021',
+    name: 'Chocolateros FC',
+    logo: '/logo_chocolateros.webp',
+  },
+  {
+    id: 'promocion2022',
+    name: 'Promoción 2022',
+    logo: '/logo-futbol.webp',
+  },
+  {
+    id: 'promocion2023',
+    name: 'Promoción 2023',
+    logo: '/logo-futbol.webp',
+  },
+  {
+    id: 'promocion2024',
+    name: 'Promoción 2024',
+    logo: '/logo-futbol.webp',
+  },
+];
+
+interface Match {
+  date: string;
+  time: string;
+  team1: string;
+  team2: string;
+  result: string;
+}
+
+const matches: Match[] = [
+  { 
+    date: '21/06/2025', 
+    time: '10:00', 
+    team1: 'Chocolateros FC', 
+    team2: 'Promoción 2022', 
+    result: '-' 
+  },
+  { 
+    date: '21/06/2025', 
+    time: '11:30', 
+    team1: 'Promoción 2023', 
+    team2: 'Promoción 2024', 
+    result: '-' 
+  },
+  { 
+    date: '21/06/2025', 
+    time: '13:00', 
+    team1: 'Promoción 2022', 
+    team2: 'Promoción 2023', 
+    result: '-' 
+  },
+  { 
+    date: '21/06/2025', 
+    time: '14:30', 
+    team1: 'Promoción 2024', 
+    team2: 'Chocolateros FC', 
+    result: '-' 
+  },
+  { 
+    date: '21/06/2025', 
+    time: '16:00', 
+    team1: 'Chocolateros FC', 
+    team2: 'Promoción 2023', 
+    result: '-' 
+  },
+  { 
+    date: '21/06/2025', 
+    time: '17:30', 
+    team1: 'Promoción 2022', 
+    team2: 'Promoción 2024', 
+    result: '-' 
+  },
+];
+
+const getTeamLogo = (teamName: string): string => {
+  const team = teams.find(t => t.name === teamName);
+  return team ? team.logo : '/logo-futbol.webp';
+};
+---
+
+<section id="fixture" class="py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-bold text-black">
+        Fixture del Torneo
+      </h2>
+      <div class="w-24 h-1.5 bg-keppel/80 mx-auto mt-4 rounded-full"></div>
+      <p class="mt-6 text-lg text-gray-800 max-w-3xl mx-auto leading-relaxed">
+        Calendario completo de partidos de la Copa Sistemas 2025. Todos los partidos se jugarán en el mismo día.
+      </p>
+    </div>
+    
+    <div class="overflow-x-auto bg-white rounded-xl shadow-md">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-berkeley">
+          <tr>
+            <th class="py-4 px-6 text-left text-theme-berkeley-blue font-semibold">Fecha</th>
+            <th class="py-4 px-6 text-left text-theme-berkeley-blue font-semibold">Hora</th>
+            <th class="py-4 px-6 text-left text-theme-berkeley-blue font-semibold">Local</th>
+            <th class="py-4 px-6 text-center text-theme-berkeley-blue font-semibold"></th>
+            <th class="py-4 px-6 text-left text-theme-berkeley-blue font-semibold">Visitante</th>
+            <th class="py-4 px-6 text-left text-theme-berkeley-blue font-semibold">Resultado</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          {matches.map((match, index) => (
+            <tr class={index % 2 === 0 ? 'bg-gray-50 hover:bg-gray-100' : 'bg-white hover:bg-gray-50'}>
+              <td class="py-5 px-6 whitespace-nowrap">
+                <div class="flex items-center">
+                  <div class="text-gray-900 font-medium">{match.date}</div>
+                </div>
+              </td>
+              <td class="py-5 px-6 whitespace-nowrap text-gray-700">{match.time}</td>
+              
+              {/* Equipo Local con logo */}
+              <td class="py-5 px-6 whitespace-nowrap">
+                <div class="flex items-center">
+                  <div class="flex-shrink-0 h-8 w-8 mr-3">
+                    <img class="h-8 w-8 object-contain" src={getTeamLogo(match.team1)} alt={`Logo ${match.team1}`} />
+                  </div>
+                  <div class="font-medium text-gray-900">{match.team1}</div>
+                </div>
+              </td>
+              
+              <td class="py-5 px-6 whitespace-nowrap text-center text-gray-500 font-bold">vs</td>
+              
+              {/* Equipo Visitante con logo */}
+              <td class="py-5 px-6 whitespace-nowrap">
+                <div class="flex items-center">
+                  <div class="flex-shrink-0 h-8 w-8 mr-3">
+                    <img class="h-8 w-8 object-contain" src={getTeamLogo(match.team2)} alt={`Logo ${match.team2}`} />
+                  </div>
+                  <div class="font-medium text-gray-900">{match.team2}</div>
+                </div>
+              </td>
+              
+              <td class="py-5 px-6 whitespace-nowrap">
+                <span class={`px-2 py-1 text-sm rounded-full font-bold ${
+                  match.result === '-' 
+                    ? 'bg-gray-100 text-gray-600' 
+                    : 'bg-theme-keppel/10 text-theme-keppel'
+                }`}>
+                  {match.result === '-' ? 'Por jugar' : match.result}
+                </span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mt-8 text-center text-sm text-gray-800">
+      <p>El torneo se realizará el 21 de junio desde las 09:00 AM en la Loza deportiva de la UNS</p>
+    </div>
+  </div>
+</section>
