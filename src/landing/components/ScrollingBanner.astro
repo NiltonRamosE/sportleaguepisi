@@ -1,0 +1,73 @@
+---
+interface Props {
+  logos?: string[];
+  speed?: 'slow' | 'normal' | 'fast';
+  gap?: 'sm' | 'md' | 'lg';
+  logoSize?: 'sm' | 'md' | 'lg';
+}
+
+const { 
+  logos = [], 
+  speed = 'fast', 
+  gap = 'md', 
+  logoSize = 'md' 
+} = Astro.props;
+
+// Configuraciones
+const speedValues = {
+  slow: '40s',
+  normal: '25s',
+  fast: '15s'
+};
+
+const gapClasses = {
+  sm: 'gap-6 md:gap-8',
+  md: 'gap-8 md:gap-12',
+  lg: 'gap-12 md:gap-16'
+};
+
+const sizeClasses = {
+  sm: 'h-10 md:h-12',
+  md: 'h-12 md:h-16',
+  lg: 'h-16 md:h-20'
+};
+
+// Duplicar logos para un scroll continuo
+const duplicatedLogos = [...logos, ...logos, ...logos, ...logos];
+---
+
+<div class="w-full overflow-hidden relative">
+  <div 
+    class={`flex py-4 items-center ${gapClasses[gap]} animate-marquee`}
+    style={`--marquee-duration: ${speedValues[speed]}`}
+  >
+    {duplicatedLogos.map((logo, index) => (
+      <div class="min-w-max px-2 flex items-center">
+        <img 
+          src={logo} 
+          alt="" 
+          class={`w-auto object-contain opacity-90 hover:opacity-100 transition-opacity ${sizeClasses[logoSize]}`}
+          loading="lazy"
+          width="80"
+          height="80"
+        />
+      </div>
+    ))}
+  </div>
+  
+  {/* Efecto de degradado para suavizar bordes */}
+  <div class="pointer-events-none absolute inset-y-0 left-0 w-16 z-10"></div>
+  <div class="pointer-events-none absolute inset-y-0 right-0 w-16 z-10"></div>
+</div>
+
+<style>
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  
+  .animate-marquee {
+    animation: marquee var(--marquee-duration) linear infinite;
+    width: fit-content;
+  }
+</style>
