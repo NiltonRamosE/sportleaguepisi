@@ -12,7 +12,7 @@ interface Props {
 
 const { team }: Props = Astro.props;
 ---
-<!-- href={`/teams/${team.id}`}  -->
+
 <a 
   href={`/#equipos`} 
   class="block group"
@@ -43,7 +43,12 @@ const { team }: Props = Astro.props;
             <li class="text-gray-700 truncate" title={player}>{player}</li>
           ))}
           {team.players.length > 5 && (
-            <li class="text-gray-500 text-sm">+{team.players.length - 5} más...</li>
+            <li 
+              class="text-gray-500 text-sm cursor-pointer hover:text-gray-700 transition-colors"
+              onclick={`document.getElementById('modal-${team.id}').showModal()`}
+            >
+              +{team.players.length - 5} más...
+            </li>
           )}
         </ul>
       </div>
@@ -57,8 +62,86 @@ const { team }: Props = Astro.props;
   </div>
 </a>
 
+<!-- Modal para mostrar todos los jugadores -->
+<dialog id={`modal-${team.id}`} class="fixed inset-0 z-50 p-0 rounded-xl shadow-xl max-w-md w-full mx-auto my-auto backdrop:bg-black/50 hidden">
+  <div class="bg-white rounded-xl max-h-[90vh] flex flex-col">
+    <div class="p-4 bg-theme-berkeley-blue text-white flex justify-between items-center">
+      <h3 class="font-bold text-xl">Todos los jugadores de {team.name}</h3>
+      <button 
+        onclick={`document.getElementById('modal-${team.id}').close()`}
+        class="text-white hover:text-gray-200 text-xl"
+        aria-label="Cerrar"
+      >
+        &times;
+      </button>
+    </div>
+    
+    <div class="p-4 overflow-y-auto flex-1">
+      <ul class="space-y-2">
+        {team.players.map((player, index) => (
+          <li class="py-2 border-b border-gray-100 last:border-0">
+            <span class="font-medium text-gray-500 mr-2">{index + 1}.</span>
+            <span class="text-gray-700">{player}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+    
+    <div class="p-4 bg-gray-50 text-right rounded-b-xl">
+      <button 
+        onclick={`document.getElementById('modal-${team.id}').close()`}
+        class="px-4 py-2 bg-theme-berkeley-blue text-white rounded-lg hover:bg-blue-700 transition-colors"
+      >
+        Cerrar
+      </button>
+    </div>
+  </div>
+</dialog>
+
+<script is:inline>
+  // Manejar la apertura y cierre del modal
+  document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('modal-${team.id}');
+    const openers = document.querySelectorAll('[data-modal="modal-${team.id}"]');
+    
+    openers.forEach(opener => {
+      opener.addEventListener('click', (e) => {
+        e.preventDefault();
+        modal.classList.remove('hidden');
+        modal.showModal();
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    modal.addEventListener('close', () => {
+      modal.classList.add('hidden');
+      document.body.style.overflow = '';
+    });
+  });
+</script>
+
 <style>
   .group:hover .group-hover\:scale-110 {
     transform: scale(1.1);
+  }
+  
+  dialog[open] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    border: none;
+    background: transparent;
+    z-index: 50;
+  }
+  
+  dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
   }
 </style>
