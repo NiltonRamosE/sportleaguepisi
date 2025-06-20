@@ -7,6 +7,11 @@ interface Team {
 
 const teams: Team[] = [
   {
+    id: 'promocion2020',
+    name: 'PROMOCIÓN 2020',
+    logo: '/logo-futbol.webp',
+  },
+  {
     id: 'promocion2021',
     name: 'Chocolateros FC',
     logo: '/logo_chocolateros.webp',
@@ -26,6 +31,16 @@ const teams: Team[] = [
     name: 'Glitchers FC',
     logo: '/logo_glitchers.webp',
   },
+  {
+    id: 'promocion2025',
+    name: 'PROMOCIÓN 2025',
+    logo: '/logo-futbol.webp',
+  },
+  {
+    id: 'promocionmixto',
+    name: 'PROMOCIÓN MIXTO',
+    logo: '/logo-futbol.webp',
+  },
 ];
 
 interface Match {
@@ -39,46 +54,32 @@ interface Match {
 const matches: Match[] = [
   { 
     date: '21/06/2025', 
-    time: '10:00', 
-    team1: 'Chocolateros FC', 
-    team2: 'Los Fieles FC', 
-    result: '-' 
-  },
-  { 
-    date: '21/06/2025', 
-    time: '11:30', 
-    team1: 'CHISTEMAS FC', 
+    time: '9:00', 
+    team1: 'PROMOCIÓN 2025', 
     team2: 'Glitchers FC', 
     result: '-' 
   },
   { 
     date: '21/06/2025', 
-    time: '13:00', 
-    team1: 'Los Fieles FC', 
-    team2: 'CHISTEMAS FC', 
-    result: '-' 
-  },
-  { 
-    date: '21/06/2025', 
-    time: '14:30', 
-    team1: 'Glitchers FC', 
-    team2: 'Chocolateros FC', 
-    result: '-' 
-  },
-  { 
-    date: '21/06/2025', 
-    time: '16:00', 
+    time: '9:40', 
     team1: 'Chocolateros FC', 
     team2: 'CHISTEMAS FC', 
     result: '-' 
   },
   { 
     date: '21/06/2025', 
-    time: '17:30', 
-    team1: 'Los Fieles FC', 
-    team2: 'Glitchers FC', 
+    time: '10:20', 
+    team1: 'PROMOCIÓN 2020', 
+    team2: 'PROMOCIÓN MIXTO', 
     result: '-' 
   },
+  { 
+    date: '21/06/2025', 
+    time: '11:00',
+    team1: 'Los Fieles FC', 
+    team2: 'Mejor Perdedor', 
+    result: '-' 
+  }
 ];
 
 const getTeamLogo = (teamName: string): string => {
