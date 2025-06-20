@@ -2,35 +2,56 @@
 import TeamCard from '@/landing/components/TeamCard.astro';
 import ScrollingBanner from "@/landing/components/ScrollingBanner.astro";
 const logos = [
+  "/logo-futbol.webp",
   "/logo_chocolateros.webp",
   "/logo_fieles.webp",
   "/logo_chistemas.webp",
   "/logo_glitchers.webp",
+  "/logo-futbol.webp",
+  "/logo-futbol.webp",
 ];
 const teams = [
   {
+    id: 'promocion2020',
+    name: 'PROMOCIÓN 2020',
+    logo: logos[0],
+    players: ['Sin jugadores confirmados'],
+  },
+  {
     id: 'promocion2021',
     name: 'Chocolateros FC',
-    logo: '/logo_chocolateros.webp',
+    logo: logos[1],
     players: ['José Vásquez', 'Jhomber Córdova', 'Anderson Luján', 'Luis Gonzales', 'Dica Portal', 'Miguel Flores', 'Rodrigo Trejo', 'Jaime Marcelo', 'Marlon Paredes', 'Jhon Sánchez', 'Rodrigo Zelada', 'José Torres'],
   },
   {
     id: 'promocion2022',
     name: 'Los Fieles FC',
-    logo: '/logo_fieles.webp',
+    logo: logos[2],
     players: ['Carlos Jamanca', 'Iriarte Soto', 'Marlon Soto', 'Fabian Ore', 'Anghelo Marchena', 'Fernando Salazar', 'Óscar Pinedo', ' Diogo Flores', 'Steeve Cier', 'Denilson Angeles', 'Flavio Roldán', 'Jim Villalobos'],
   },
   {
     id: 'promocion2023',
     name: 'CHISTEMAS FC',
-    logo: '/logo_chistemas.webp',
+    logo: logos[3],
     players: ['Alonso Roque', 'Alexander Garrido', 'César Rodas', 'Fernando Ferre', 'Marcos Lopez', 'Ariel Rodriguez', 'Anghel Tafur', 'Yordi Lago', 'Ari Lozano', 'Victor Ling'],
   },
   {
     id: 'promocion2024',
     name: 'Glitchers FC',
-    logo: '/logo_glitchers.webp',
+    logo: logos[4],
     players: ['Michel Crisanto', 'Sebastian Dominguez', 'Justyn Lector', 'Zaid Lozano', 'Pedro Mejia', 'Sander Olortigue', 'Luis Patricio', 'Dastin Prado', 'Sebastian Rodriguez', 'Rachel Rosales', 'Alessandro Sanchez', 'Roycer Vasquez'],
+  },
+  {
+    id: 'promocion2025',
+    name: 'PROMOCIÓN 2025',
+    logo: logos[5],
+    players: ['Sin jugadores confirmados'],
+  },
+  {
+    id: 'promocionmixto',
+    name: 'PROMOCIÓN MIXTO',
+    logo: logos[6],
+    players: ['Sin jugadores confirmados'],
   },
 ];
 ---
