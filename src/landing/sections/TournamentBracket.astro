@@ -13,16 +13,16 @@ interface Match {
   time?: string;
   team1: string;
   team2: string;
-  winner?: string;
+  winner: string;
 }
 
 const teams: Team[] = [
   { id: 'promo20', name: 'PROMO 20 (EQUIPO 5)', logo: '/logo-futbol.webp' },
-  { id: 'promo21', name: 'CHOCOLATEROS FC (EQUIPO 3)', logo: '/logo_chocolateros.webp' },
+  { id: 'promo21', name: 'CHOCOLATEROS (EQUIPO 3)', logo: '/logo_chocolateros.webp' },
   { id: 'promo22', name: 'LOS FIELES FC (EQUIPO 7)', logo: '/logo_fieles.webp' },
   { id: 'promo23', name: 'CHISTEMAS (EQUIPO 4)', logo: '/logo_chistemas.webp' },
-  { id: 'promo24', name: 'GLITCHERS FC (EQUIPO 2)', logo: '/logo_glitchers.webp' },
-  { id: 'promo25', name: 'PROMO 25 (EQUIPO 1)', logo: '/logo-futbol.webp' },
+  { id: 'promo24', name: 'GLITCHERS (EQUIPO 2)', logo: '/logo_glitchers.webp' },
+  { id: 'promo25', name: 'REAL MANDRIL (EQUIPO 1)', logo: '/logo_real_mandril.webp' },
   { id: 'promoMixto', name: 'PROMO MIXTO (EQUIPO 6)', logo: '/logo-futbol.webp' },
 ];
 
@@ -48,10 +48,10 @@ function getWinningTeam(matchId: string): Team | undefined {
 }
 
 const quarterFinals: Match[] = [
-  { id: 'llave01', team1: 'promo25', team2: 'promo24', winner: 'promo24' },
-  { id: 'llave02', team1: 'promo21', team2: 'promo23', winner: 'promo21' },
-  { id: 'llave03', team1: 'promo20', team2: 'promoMixto', winner: 'promo20' },
-  { id: 'llave04', team1: 'promo22', team2: 'mejorPerdedor', winner: 'promo23' },
+  { id: 'llave01', team1: 'promo25', team2: 'promo24', winner: '' },
+  { id: 'llave02', team1: 'promo21', team2: 'promo23', winner: '' },
+  { id: 'llave03', team1: 'promo20', team2: 'promoMixto', winner: '' },
+  { id: 'llave04', team1: 'promo22', team2: 'mejorPerdedor', winner: '' },
 ];
 
 const semiFinals: Match[] = [
@@ -59,13 +59,13 @@ const semiFinals: Match[] = [
     id: 'semifinal01', 
     team1: quarterFinals[0].id,  // Referencia a llave01
     team2: quarterFinals[1].id,  // Referencia a llave02
-    winner: 'promo21' 
+    winner: '' 
   },
   { 
     id: 'semifinal02', 
     team1: quarterFinals[2].id,  // Referencia a llave03
     team2: quarterFinals[3].id,  // Referencia a llave04
-    winner: 'promo23' 
+    winner: '' 
   },
 ];
 
@@ -78,7 +78,7 @@ const final: Match = {
 
 const champion = { 
   id: 'champion', 
-  team1: 'promo21', 
+  team1: final.winner, 
 };
 ---
 
