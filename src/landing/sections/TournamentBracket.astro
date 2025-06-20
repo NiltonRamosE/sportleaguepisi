@@ -1,0 +1,227 @@
+---
+import TeamNode from '@/landing/components/TeamNode.astro';
+import MatchConnector from '@/landing/components/MatchConnector.astro';
+
+interface Team {
+  id: string;
+  name: string;
+  logo: string;
+}
+
+interface Match {
+  id: string;
+  time?: string;
+  team1: string;
+  team2: string;
+  winner?: string;
+}
+
+const teams: Team[] = [
+  { id: 'promo20', name: 'PROMO 20 (EQUIPO 5)', logo: '/logo-futbol.webp' },
+  { id: 'promo21', name: 'CHOCOLATEROS FC (EQUIPO 3)', logo: '/logo_chocolateros.webp' },
+  { id: 'promo22', name: 'LOS FIELES FC (EQUIPO 7)', logo: '/logo_fieles.webp' },
+  { id: 'promo23', name: 'CHISTEMAS (EQUIPO 4)', logo: '/logo_chistemas.webp' },
+  { id: 'promo24', name: 'GLITCHERS FC (EQUIPO 2)', logo: '/logo_glitchers.webp' },
+  { id: 'promo25', name: 'PROMO 25 (EQUIPO 1)', logo: '/logo-futbol.webp' },
+  { id: 'promoMixto', name: 'PROMO MIXTO (EQUIPO 6)', logo: '/logo-futbol.webp' },
+];
+
+function getTeamById(id: string): Team | undefined {
+  return teams.find(team => team.id === id);
+}
+
+function getWinningTeam(matchId: string): Team | undefined {
+  const allMatches = [...quarterFinals, ...semiFinals, final];
+  const match = allMatches.find(m => m.id === matchId);
+  
+  if (!match) return undefined;
+  
+  if (match.winner) {
+    return getTeamById(match.winner);
+  }
+  
+  return {
+    id: matchId,
+    name: `GANADOR ${matchId.toUpperCase()}`,
+    logo: '/logo-futbol.webp'
+  };
+}
+
+const quarterFinals: Match[] = [
+  { id: 'llave01', team1: 'promo25', team2: 'promo24', winner: 'promo24' },
+  { id: 'llave02', team1: 'promo21', team2: 'promo23', winner: 'promo21' },
+  { id: 'llave03', team1: 'promo20', team2: 'promoMixto', winner: 'promo20' },
+  { id: 'llave04', team1: 'promo22', team2: 'mejorPerdedor', winner: 'promo23' },
+];
+
+const semiFinals: Match[] = [
+  { 
+    id: 'semifinal01', 
+    team1: quarterFinals[0].id,  // Referencia a llave01
+    team2: quarterFinals[1].id,  // Referencia a llave02
+    winner: 'promo21' 
+  },
+  { 
+    id: 'semifinal02', 
+    team1: quarterFinals[2].id,  // Referencia a llave03
+    team2: quarterFinals[3].id,  // Referencia a llave04
+    winner: 'promo23' 
+  },
+];
+
+const final: Match = { 
+  id: 'final', 
+  team1: semiFinals[0].id,  // Referencia a semifinal01
+  team2: semiFinals[1].id,  // Referencia a semifinal02
+  winner: ''
+};
+
+const champion = { 
+  id: 'champion', 
+  team1: 'promo21', 
+};
+---
+
+<section id="bracket" class="py-8 md:py-12">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="relative">
+      <!-- Quarter Finals -->
+      <div class="mb-8 md:mb-12">
+        <div class="flex flex-col md:flex-row md:items-center mb-4">
+          <div class="w-full md:w-32 mb-2 md:mb-0 md:mr-4">
+            <h3 class="text-lg font-bold text-white text-center md:text-left">CUARTOS</h3>
+          </div>
+          <div class="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {quarterFinals.map((match, index) => (
+              <div class="flex flex-col items-center relative">                
+                <div class="flex flex-row justify-center items-center gap-4 md:gap-8 w-full">
+                  <TeamNode 
+                    team={getTeamById(match.team1!)} 
+                    isQuarterFinal={true} 
+                    isWinner={match.winner === match.team1}
+                  />
+                  <TeamNode 
+                    team={match.team2 === 'mejorPerdedor' ? 
+                      { id: 'mejorPerdedor', name: 'MEJOR PERDEDOR', logo: '/logo-futbol.webp' } : 
+                      getTeamById(match.team2!)
+                    } 
+                    isQuarterFinal={true}
+                    isWinner={match.winner === match.team2}
+                  />
+                </div>
+                <div class="text-xs text-white mt-2 font-bold">LLAVE {index + 1}</div>
+                
+                {/* Vertical connector for each match */}
+                <MatchConnector 
+                  height="h-6 md:h-12" 
+                  className="hidden md:block"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Semi Finals -->
+      <div class="mb-8 md:mb-12">
+        <div class="flex flex-col md:flex-row md:items-center mb-4">
+          <div class="w-full md:w-32 mb-2 md:mb-0 md:mr-4">
+            <h3 class="text-lg font-bold text-white text-center md:text-left">SEMIFINALES</h3>
+          </div>
+          <div class="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {semiFinals.map((match, index) => (
+              <div class="flex flex-col items-center relative">                
+                <div class="flex flex-row justify-center items-center gap-6 md:gap-12 w-full">
+                  <TeamNode 
+                    team={getWinningTeam(match.team1)}  
+                    isSemiFinal={true}
+                    isWinner={match.winner === match.team1}
+                  />
+                  <TeamNode 
+                    team={getWinningTeam(match.team2)}  
+                    isSemiFinal={true}
+                    isWinner={match.winner === match.team2}
+                  />
+                </div>
+                <div class="text-xs text-white mt-2 font-bold">SEMIFINAL {index + 1}</div>
+                
+                {/* Vertical connector for each match */}
+                <MatchConnector 
+                  height="h-6 md:h-12" 
+                  className="hidden md:block"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Final -->
+      <div class="mb-8 md:mb-12">
+        <div class="flex flex-col md:flex-row md:items-center mb-4">
+          <div class="w-full md:w-32 mb-2 md:mb-0 md:mr-4">
+            <h3 class="text-lg font-bold text-white text-center md:text-left">FINAL</h3>
+          </div>
+          <div class="flex-1 flex justify-center">
+            <div class="flex flex-col items-center relative w-full max-w-md">              
+              <div class="flex flex-row justify-center items-center gap-8 md:gap-16 w-full">
+                <TeamNode 
+                    team={getWinningTeam(final.team1)} 
+                    isFinal={true}
+                    isWinner={final.winner === final.team1}
+                />
+                <TeamNode 
+                    team={getWinningTeam(final.team2)} 
+                    isFinal={true}
+                    isWinner={final.winner === final.team2}
+                />
+              </div>
+              
+              {/* Vertical connector */}
+              <MatchConnector 
+                height="h-6 md:h-12" 
+                className="hidden md:block"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Champion -->
+      <div>
+        <div class="flex flex-col md:flex-row md:items-center">
+          <div class="w-full md:w-32 mb-2 md:mb-0 md:mr-4">
+            <h3 class="text-lg font-bold text-white text-center md:text-left">CAMPEÓN</h3>
+          </div>
+          <div class="flex-1 flex justify-center">
+            <TeamNode 
+              team={getTeamById(champion.team1)} 
+              isChampion={true}
+              isWinner={true}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Custom responsive adjustments */
+  @media (max-width: 640px) {
+    #bracket .grid-cols-4 {
+      grid-template-columns: repeat(1, 1fr);
+    }
+    
+    #bracket .grid-cols-2 {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @media (min-width: 640px) and (max-width: 1024px) {
+    #bracket .grid-cols-4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

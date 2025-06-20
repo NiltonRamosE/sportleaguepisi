@@ -1,0 +1,64 @@
+---
+interface Props {
+  team?: {
+    id: string;
+    name: string;
+    logo: string;
+  };
+  label?: string;
+  isChampion?: boolean;
+  isFinal?: boolean;
+  isSemiFinal?: boolean;
+  isQuarterFinal?: boolean;
+  isWinner?: boolean;
+}
+
+const { team, label, isChampion = false, isFinal = false, isSemiFinal = false, isQuarterFinal = false, isWinner = false } = Astro.props;
+---
+
+<div class="flex flex-col items-center z-10">
+  <div class={`
+    rounded-full w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 flex items-center justify-center border-2
+    ${isWinner ? 'border-green-500 ring-2 ring-green-300 ' : 
+      isChampion ? 'border-yellow-400 bg-gradient-to-br from-yellow-400 to-yellow-500' : 
+      isFinal ? 'border-purple-500' :
+      isSemiFinal ? 'border-blue-500' :
+      isQuarterFinal ? 'border-green-500' :
+      'border-gray-300 bg-white'}
+    shadow-md overflow-hidden relative
+  `}>
+    {team?.logo ? (
+      <img 
+        src={team.logo} 
+        alt={team.name} 
+        class="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 object-contain p-1" 
+      />
+    ) : (
+      <div class="text-xs text-center text-gray-500 p-2">
+        {label || 'Por definir'}
+      </div>
+    )}
+    {isWinner && (
+      <div class="absolute -top-2 -right-2 bg-green-500 text-white rounded-full w-5 h-5 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+        </svg>
+      </div>
+    )}
+  </div>
+  
+  <!-- Nombre del equipo -->
+  <div class="mt-2 text-center max-w-xs px-1">
+    <span class={`
+      text-xs sm:text-sm font-medium
+      ${isWinner ? 'text-black font-bold' :
+        isChampion ? 'text-theme-berkeley-blue font-bold' : 
+        isFinal ? 'text-theme-berkeley-blue' :
+        isSemiFinal ? 'text-theme-berkeley-blue' :
+        isQuarterFinal ? 'text-theme-berkeley-blue' :
+        'text-gray-700'}
+    `}>
+      {team?.name || label || 'Por definir'}
+    </span>
+  </div>
+</div>

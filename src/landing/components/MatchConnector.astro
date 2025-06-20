@@ -1,0 +1,21 @@
+---
+interface Props {
+  height?: string;
+  direction?: 'horizontal' | 'vertical';
+  className?: string;
+}
+
+const { 
+  height = 'h-4 sm:h-6 md:h-8', 
+  direction = 'horizontal',
+  className = ''
+} = Astro.props;
+---
+
+<div class={`relative ${height} w-full ${className}`}>
+  {direction === 'horizontal' ? (
+    <div class="absolute top-1/2 left-0 right-0 border-t-2 border-gray-300"></div>
+  ) : (
+    <div class="absolute top-0 bottom-0 left-1/2 border-l-2 border-gray-300"></div>
+  )}
+</div>
